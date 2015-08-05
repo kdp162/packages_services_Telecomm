@@ -166,16 +166,9 @@ public class MissedCallNotifierImpl extends CallsManagerListenerBase implements 
             intent.putExtra(TelecomManager.EXTRA_CLEAR_MISSED_CALLS_INTENT,
                     createClearMissedCallsPendingIntent());
 
-
             if (count == 1 && call != null) {
-                final Uri handleUri = call.getHandle();
-                String handle = handleUri == null ? null : handleUri.getSchemeSpecificPart();
-
-                if (!TextUtils.isEmpty(handle) && !TextUtils.equals(handle,
-                        mContext.getString(R.string.handle_restricted))) {
-                    intent.putExtra(TelecomManager.EXTRA_CALL_BACK_INTENT,
-                            createCallBackPendingIntent(handleUri));
-                }
+                intent.putExtra(TelecomManager.EXTRA_CALL_BACK_INTENT,
+                    createCallBackPendingIntent(call.getHandle()));
             }
 
             mContext.sendBroadcast(intent);
